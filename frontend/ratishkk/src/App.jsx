@@ -14,7 +14,6 @@ export default function KannadaSummarizer() {
   const [error, setError] = useState('');
   const [kannadaPercentage, setKannadaPercentage] = useState(null);
 
-  // Kannada validation function (client-side)
   const validateKannadaText = (inputText) => {
     const kannadaRegex = /[\u0C80-\u0CFF]/g;
     const kannadaMatches = inputText.match(kannadaRegex);
@@ -40,7 +39,6 @@ export default function KannadaSummarizer() {
       return;
     }
 
-    // Client-side validation
     const validation = validateKannadaText(text);
     if (!validation.isValid) {
       setError(`Please enter text in Kannada script (ಕನ್ನಡ). Current Kannada content: ${validation.percentage}% (minimum 70% required)`);
@@ -136,70 +134,70 @@ export default function KannadaSummarizer() {
   };
 
   const downloadSummary = () => {
+    const content = `ಮೂಲ ಪಠ್ಯ (Original Text):
+
+${originalText}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ಸಾರಾಂಶ (Summary):
+
+${summary}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Algorithm Used: ${model.toUpperCase()}
+Generated: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+`;
+
+    // Create a Blob with UTF-8 encoding and BOM for proper Kannada rendering
+    const BOM = '\uFEFF';
+    const blob = new Blob([BOM + content], { type: 'text/plain;charset=utf-8' });
+    
     const element = document.createElement('a');
-    const file = new Blob([`Original Text:\n\n${originalText}\n\n---\n\nSummary:\n\n${summary}`], {
-      type: 'text/plain',
-    });
-    element.href = URL.createObjectURL(file);
-    element.download = `summary_${Date.now()}.txt`;
+    element.href = URL.createObjectURL(blob);
+    element.download = `kannada_summary_${Date.now()}.txt`;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+    URL.revokeObjectURL(element.href);
   };
 
   const modelDescriptions = {
     textrank: {
       name: 'TextRank',
-      desc: 'Graph-based algorithm',
-      detail: 'Uses PageRank to identify important sentences',
       icon: '🎯'
     },
     advanced: {
       name: 'Advanced',
-      desc: 'Frequency-based method',
-      detail: 'Scores sentences using word frequency and position',
       icon: '⚡'
     },
     hybrid: {
       name: 'Hybrid',
-      desc: 'Combined approach',
-      detail: 'Merges TextRank and Advanced methods',
       icon: '🔄'
     },
     simple: {
       name: 'Simple',
-      desc: 'Fast & reliable',
-      detail: 'Quick extractive summarization',
       icon: '✨'
     }
   };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Beautiful Background with Image */}
       <div className="fixed inset-0">
-        {/* Background Image with Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-fixed"
           style={{
             backgroundImage: `url("https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1920&q=80")`,
           }}
         ></div>
-        
-        {/* Gradient Overlay for better readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-orange-900/40 via-amber-900/30 to-yellow-900/40"></div>
-        
-        {/* Animated Light Overlays */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-400 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-400 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
         <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-amber-400 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse" style={{animationDelay: '4s'}}></div>
-        
-        {/* Decorative Pattern Overlay */}
         <div className="absolute inset-0 opacity-30" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}></div>
-        
-        {/* Subtle Noise Texture */}
         <div className="absolute inset-0 opacity-5" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
         }}></div>
@@ -207,7 +205,6 @@ export default function KannadaSummarizer() {
 
       <div className="relative z-10 min-h-screen p-4 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-10">
             <div className="inline-block">
               <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl px-8 py-6 border-2 border-white/50 hover:shadow-orange-300/50 hover:shadow-3xl transition-all duration-300">
@@ -223,7 +220,6 @@ export default function KannadaSummarizer() {
             </div>
           </div>
 
-          {/* Language Warning Banner */}
           <div className="mb-6 bg-gradient-to-r from-blue-100/95 to-indigo-100/95 backdrop-blur-xl border-2 border-blue-300 rounded-xl p-4 shadow-lg">
             <div className="flex items-start gap-3">
               <AlertCircle className="text-blue-600 flex-shrink-0 mt-1" size={24} />
@@ -237,9 +233,7 @@ export default function KannadaSummarizer() {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="grid lg:grid-cols-3 gap-6">
-            {/* Model Selection Sidebar */}
             <div className="lg:col-span-1">
               <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl p-6 border-2 border-white/50 sticky top-4">
                 <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
@@ -250,56 +244,29 @@ export default function KannadaSummarizer() {
                   {Object.entries(modelDescriptions).map(([key, info]) => (
                     <label
                       key={key}
-                      className={`flex flex-col cursor-pointer p-4 rounded-xl transition-all duration-200 ${
+                      className={`flex items-center cursor-pointer p-4 rounded-xl transition-all duration-200 ${
                         model === key
                           ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg scale-105'
                           : 'bg-white hover:bg-orange-50 border-2 border-gray-200 hover:border-orange-300'
                       }`}
                     >
-                      <div className="flex items-start gap-3">
-                        <input
-                          type="radio"
-                          value={key}
-                          checked={model === key}
-                          onChange={(e) => setModel(e.target.value)}
-                          className="mt-1"
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xl">{info.icon}</span>
-                            <span className="font-bold text-lg">{info.name}</span>
-                          </div>
-                          <div className={`text-sm ${model === key ? 'text-white/90' : 'text-gray-600'} mb-1`}>
-                            {info.desc}
-                          </div>
-                          <div className={`text-xs ${model === key ? 'text-white/75' : 'text-gray-500'}`}>
-                            {info.detail}
-                          </div>
-                        </div>
-                      </div>
+                      <input
+                        type="radio"
+                        value={key}
+                        checked={model === key}
+                        onChange={(e) => setModel(e.target.value)}
+                        className="mr-3"
+                      />
+                      <span className="text-xl mr-3">{info.icon}</span>
+                      <span className="font-bold text-lg">{info.name}</span>
                     </label>
                   ))}
-                </div>
-
-                {/* Algorithm Info */}
-                <div className="mt-6 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border-2 border-blue-200">
-                  <h4 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
-                    <span>💡</span> How it works
-                  </h4>
-                  <p className="text-sm text-blue-800 leading-relaxed">
-                    {model === 'textrank' && 'Uses graph theory to rank sentences based on their importance and similarity to other sentences.'}
-                    {model === 'advanced' && 'Analyzes word frequency, sentence position, and keyword presence to score each sentence.'}
-                    {model === 'hybrid' && 'Combines multiple algorithms to produce the most accurate summary possible.'}
-                    {model === 'simple' && 'Quickly extracts key sentences using basic frequency analysis.'}
-                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Input Section */}
             <div className="lg:col-span-2">
               <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border-2 border-white/50 overflow-hidden">
-                {/* Tabs */}
                 <div className="flex border-b-2 border-orange-200 bg-gradient-to-r from-orange-50/80 to-amber-50/80 backdrop-blur-sm">
                   <button
                     onClick={() => setActiveTab('text')}
@@ -337,7 +304,6 @@ export default function KannadaSummarizer() {
                 </div>
 
                 <div className="p-6">
-                  {/* Text Input Tab */}
                   {activeTab === 'text' && (
                     <div>
                       <textarea
@@ -345,6 +311,7 @@ export default function KannadaSummarizer() {
                         onChange={(e) => setText(e.target.value)}
                         placeholder="ಇಲ್ಲಿ ಕನ್ನಡ ಪಠ್ಯವನ್ನು ನಮೂದಿಸಿ... (Enter Kannada text here...)"
                         className="w-full h-80 p-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-orange-200 focus:border-orange-400 resize-none transition-all shadow-sm font-mono bg-white"
+                        style={{ fontFamily: 'Noto Sans Kannada, sans-serif' }}
                       />
                       <button
                         onClick={handleTextSummarize}
@@ -366,7 +333,6 @@ export default function KannadaSummarizer() {
                     </div>
                   )}
 
-                  {/* PDF Upload Tab */}
                   {activeTab === 'pdf' && (
                     <div>
                       <div className="border-2 border-dashed border-orange-300 rounded-xl p-16 text-center bg-gradient-to-br from-orange-50/50 to-amber-50/50 hover:border-orange-400 transition-all">
@@ -413,7 +379,6 @@ export default function KannadaSummarizer() {
                     </div>
                   )}
 
-                  {/* Word Upload Tab */}
                   {activeTab === 'word' && (
                     <div>
                       <div className="border-2 border-dashed border-orange-300 rounded-xl p-16 text-center bg-gradient-to-br from-orange-50/50 to-amber-50/50 hover:border-orange-400 transition-all">
@@ -460,7 +425,6 @@ export default function KannadaSummarizer() {
                     </div>
                   )}
 
-                  {/* Error Display */}
                   {error && (
                     <div className="mt-6 bg-red-50/95 backdrop-blur-sm border-2 border-red-300 text-red-700 px-6 py-4 rounded-xl shadow-lg">
                       <div className="flex items-start gap-3">
@@ -478,7 +442,6 @@ export default function KannadaSummarizer() {
                     </div>
                   )}
 
-                  {/* Summary Result */}
                   {summary && (
                     <div className="mt-6 bg-gradient-to-br from-green-50/95 to-emerald-50/95 backdrop-blur-xl border-2 border-green-300 rounded-xl shadow-xl overflow-hidden animate-fade-in">
                       <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-6 py-4 flex justify-between items-center">
@@ -502,14 +465,15 @@ export default function KannadaSummarizer() {
                         </button>
                       </div>
                       <div className="p-6">
-                        <p className="text-gray-800 whitespace-pre-wrap leading-relaxed text-lg">{summary}</p>
+                        <p className="text-gray-800 whitespace-pre-wrap leading-relaxed text-lg" style={{ fontFamily: 'Noto Sans Kannada, sans-serif' }}>
+                          {summary}
+                        </p>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Instructions */}
               <div className="mt-6 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl p-6 border-2 border-white/50">
                 <h3 className="font-bold text-gray-800 mb-4 text-xl flex items-center gap-2">
                   <span className="text-2xl">📋</span>
@@ -531,8 +495,6 @@ export default function KannadaSummarizer() {
                       <span className="text-gray-700 pt-0.5">{step}</span>
                     </div>
                   ))}
-                  
-
                 </div>
               </div>
             </div>
@@ -540,6 +502,5 @@ export default function KannadaSummarizer() {
         </div>
       </div>
     </div>
-    
   );
 }
