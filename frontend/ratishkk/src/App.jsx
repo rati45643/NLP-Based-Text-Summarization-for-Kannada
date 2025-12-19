@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FileText, Upload, Download, Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import './App.css';
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
@@ -150,7 +151,6 @@ Algorithm Used: ${model.toUpperCase()}
 Generated: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 `;
 
-    // Create a Blob with UTF-8 encoding and BOM for proper Kannada rendering
     const BOM = '\uFEFF';
     const blob = new Blob([BOM + content], { type: 'text/plain;charset=utf-8' });
     
@@ -163,342 +163,184 @@ Generated: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
     URL.revokeObjectURL(element.href);
   };
 
-  const modelDescriptions = {
-    textrank: {
-      name: 'TextRank',
-      icon: '🎯'
-    },
-    advanced: {
-      name: 'Advanced',
-      icon: '⚡'
-    },
-    hybrid: {
-      name: 'Hybrid',
-      icon: '🔄'
-    },
-    simple: {
-      name: 'Simple',
-      icon: '✨'
-    }
-  };
+  const algorithms = [
+    { id: 'textrank', name: 'TextRank', icon: '🎯' },
+    { id: 'advanced', name: 'Advanced', icon: '⚡' },
+    { id: 'hybrid', name: 'Hybrid', icon: '🔄' },
+    { id: 'simple', name: 'Simple', icon: '✨' }
+  ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <div className="fixed inset-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
-          style={{
-            backgroundImage: `url("https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1920&q=80")`,
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-900/40 via-amber-900/30 to-yellow-900/40"></div>
-        <div className="absolute top-0 left-0 w-96 h-96 bg-orange-400 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-400 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-amber-400 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse" style={{animationDelay: '4s'}}></div>
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}></div>
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-        }}></div>
+    <div className="app-container">
+      {/* Animated Background */}
+      <div className="background-wrapper">
+        <div className="background-image"></div>
+        <div className="background-overlay"></div>
+        <div className="floating-orb orb-1"></div>
+        <div className="floating-orb orb-2"></div>
+        <div className="floating-orb orb-3"></div>
       </div>
 
-      <div className="relative z-10 min-h-screen p-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <div className="inline-block">
-              <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl px-8 py-6 border-2 border-white/50 hover:shadow-orange-300/50 hover:shadow-3xl transition-all duration-300">
-                <div className="flex items-center justify-center gap-3 mb-2">
-                  <Sparkles className="text-orange-500 animate-pulse" size={32} />
-                  <h1 className="text-5xl font-bold bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 bg-clip-text text-transparent drop-shadow-sm">
-                    ಕನ್ನಡ ಪಠ್ಯ ಸಾರಾಂಶ
-                  </h1>
-                  <Sparkles className="text-orange-500 animate-pulse" size={32} style={{animationDelay: '1s'}} />
-                </div>
-                <p className="text-gray-700 text-lg font-semibold">Kannada Text Summarization using NLP</p>
+      <div className="content-wrapper">
+        <div className="main-container">
+          {/* Header */}
+          <div className="header-section">
+            <div className="header-card glass-card">
+              <div className="header-content">
+                <Sparkles className="header-icon header-icon-left float-animation" size={40} />
+                <h1 className="main-title gradient-text">
+                  ಕನ್ನಡ ಪಠ್ಯ ಸಾರಾಂಶ
+                </h1>
+                <Sparkles className="header-icon header-icon-right float-animation" size={40} />
               </div>
+              <p className="subtitle">Kannada Text Summarization using NLP</p>
             </div>
           </div>
 
-          <div className="mb-6 bg-gradient-to-r from-blue-100/95 to-indigo-100/95 backdrop-blur-xl border-2 border-blue-300 rounded-xl p-4 shadow-lg">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="text-blue-600 flex-shrink-0 mt-1" size={24} />
-              <div>
-                <h3 className="font-bold text-blue-900 mb-1">ಕನ್ನಡ ಮಾತ್ರ (Kannada Only)</h3>
-                <p className="text-blue-800 text-sm">
-                  This application only accepts text in Kannada script. Please ensure your input contains at least 70% Kannada characters. 
-                  Other languages or scripts will be rejected.
-                </p>
-              </div>
+          {/* Algorithm Selection */}
+          <div className="section-card glass-card">
+            <h2 className="section-title">Select Algorithm</h2>
+            <div className="algorithm-grid">
+              {algorithms.map((algo) => (
+                <button
+                  key={algo.id}
+                  onClick={() => setModel(algo.id)}
+                  className={`algorithm-card ${model === algo.id ? 'algorithm-card-active' : ''}`}
+                >
+                  <div className="algorithm-content">
+                    <div className="algorithm-icon">{algo.icon}</div>
+                    <div className="algorithm-name">{algo.name}</div>
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
-              <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl p-6 border-2 border-white/50 sticky top-4">
-                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <span className="text-2xl">🤖</span>
-                  Select Algorithm
-                </h3>
-                <div className="space-y-3">
-                  {Object.entries(modelDescriptions).map(([key, info]) => (
-                    <label
-                      key={key}
-                      className={`flex items-center cursor-pointer p-4 rounded-xl transition-all duration-200 ${
-                        model === key
-                          ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg scale-105'
-                          : 'bg-white hover:bg-orange-50 border-2 border-gray-200 hover:border-orange-300'
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        value={key}
-                        checked={model === key}
-                        onChange={(e) => setModel(e.target.value)}
-                        className="mr-3"
-                      />
-                      <span className="text-xl mr-3">{info.icon}</span>
-                      <span className="font-bold text-lg">{info.name}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
+          {/* Input Selection */}
+          <div className="section-card glass-card">
+            <h2 className="section-title">Input Method</h2>
+            <div className="tab-grid">
+              <button
+                onClick={() => setActiveTab('text')}
+                className={`tab-button ${activeTab === 'text' ? 'tab-button-active' : ''}`}
+              >
+                <FileText className="tab-icon" size={36} />
+                Text Input
+              </button>
+              <button
+                onClick={() => setActiveTab('pdf')}
+                className={`tab-button ${activeTab === 'pdf' ? 'tab-button-active' : ''}`}
+              >
+                <Upload className="tab-icon" size={36} />
+                PDF File
+              </button>
+              <button
+                onClick={() => setActiveTab('word')}
+                className={`tab-button ${activeTab === 'word' ? 'tab-button-active' : ''}`}
+              >
+                <Upload className="tab-icon" size={36} />
+                Word File
+              </button>
             </div>
 
-            <div className="lg:col-span-2">
-              <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border-2 border-white/50 overflow-hidden">
-                <div className="flex border-b-2 border-orange-200 bg-gradient-to-r from-orange-50/80 to-amber-50/80 backdrop-blur-sm">
-                  <button
-                    onClick={() => setActiveTab('text')}
-                    className={`flex-1 px-6 py-4 font-semibold flex items-center justify-center gap-2 transition-all ${
-                      activeTab === 'text'
-                        ? 'bg-white text-orange-600 border-b-4 border-orange-500 shadow-lg'
-                        : 'text-gray-600 hover:text-orange-600 hover:bg-white/50'
-                    }`}
-                  >
-                    <FileText size={20} />
-                    Text Input
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('pdf')}
-                    className={`flex-1 px-6 py-4 font-semibold flex items-center justify-center gap-2 transition-all ${
-                      activeTab === 'pdf'
-                        ? 'bg-white text-orange-600 border-b-4 border-orange-500 shadow-lg'
-                        : 'text-gray-600 hover:text-orange-600 hover:bg-white/50'
-                    }`}
-                  >
-                    <Upload size={20} />
-                    PDF
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('word')}
-                    className={`flex-1 px-6 py-4 font-semibold flex items-center justify-center gap-2 transition-all ${
-                      activeTab === 'word'
-                        ? 'bg-white text-orange-600 border-b-4 border-orange-500 shadow-lg'
-                        : 'text-gray-600 hover:text-orange-600 hover:bg-white/50'
-                    }`}
-                  >
-                    <Upload size={20} />
-                    Word
-                  </button>
-                </div>
+            {/* Input Area */}
+            <div className="input-section">
+              {activeTab === 'text' && (
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="ಇಲ್ಲಿ ಕನ್ನಡ ಪಠ್ಯವನ್ನು ನಮೂದಿಸಿ... (Enter Kannada text here...)"
+                  className="text-input kannada-text"
+                />
+              )}
 
-                <div className="p-6">
-                  {activeTab === 'text' && (
-                    <div>
-                      <textarea
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        placeholder="ಇಲ್ಲಿ ಕನ್ನಡ ಪಠ್ಯವನ್ನು ನಮೂದಿಸಿ... (Enter Kannada text here...)"
-                        className="w-full h-80 p-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-orange-200 focus:border-orange-400 resize-none transition-all shadow-sm font-mono bg-white"
-                        style={{ fontFamily: 'Noto Sans Kannada, sans-serif' }}
-                      />
-                      <button
-                        onClick={handleTextSummarize}
-                        disabled={loading || !text.trim()}
-                        className="mt-4 w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 disabled:scale-100 flex items-center justify-center gap-3"
-                      >
-                        {loading ? (
-                          <>
-                            <Loader2 className="animate-spin" size={24} />
-                            <span className="text-lg">Summarizing...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles size={24} />
-                            <span className="text-lg">Generate Summary</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  )}
-
-                  {activeTab === 'pdf' && (
-                    <div>
-                      <div className="border-2 border-dashed border-orange-300 rounded-xl p-16 text-center bg-gradient-to-br from-orange-50/50 to-amber-50/50 hover:border-orange-400 transition-all">
-                        <Upload className="mx-auto mb-4 text-orange-400" size={56} />
-                        <input
-                          type="file"
-                          accept=".pdf"
-                          onChange={handleFileChange}
-                          className="hidden"
-                          id="pdf-upload"
-                        />
-                        <label
-                          htmlFor="pdf-upload"
-                          className="cursor-pointer text-orange-600 hover:text-orange-700 font-bold text-lg"
-                        >
-                          Click to upload Kannada PDF
-                        </label>
-                        <p className="text-gray-500 mt-2">or drag and drop</p>
-                        {file && (
-                          <div className="mt-6 p-4 bg-white rounded-lg shadow-md inline-block">
-                            <p className="text-sm font-semibold text-gray-700">
-                              📄 {file.name}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                      <button
-                        onClick={handleFileUpload}
-                        disabled={loading || !file}
-                        className="mt-4 w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 disabled:scale-100 flex items-center justify-center gap-3"
-                      >
-                        {loading ? (
-                          <>
-                            <Loader2 className="animate-spin" size={24} />
-                            <span className="text-lg">Processing...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles size={24} />
-                            <span className="text-lg">Summarize PDF</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  )}
-
-                  {activeTab === 'word' && (
-                    <div>
-                      <div className="border-2 border-dashed border-orange-300 rounded-xl p-16 text-center bg-gradient-to-br from-orange-50/50 to-amber-50/50 hover:border-orange-400 transition-all">
-                        <Upload className="mx-auto mb-4 text-orange-400" size={56} />
-                        <input
-                          type="file"
-                          accept=".doc,.docx"
-                          onChange={handleFileChange}
-                          className="hidden"
-                          id="word-upload"
-                        />
-                        <label
-                          htmlFor="word-upload"
-                          className="cursor-pointer text-orange-600 hover:text-orange-700 font-bold text-lg"
-                        >
-                          Click to upload Kannada Word document
-                        </label>
-                        <p className="text-gray-500 mt-2">or drag and drop</p>
-                        {file && (
-                          <div className="mt-6 p-4 bg-white rounded-lg shadow-md inline-block">
-                            <p className="text-sm font-semibold text-gray-700">
-                              📝 {file.name}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                      <button
-                        onClick={handleFileUpload}
-                        disabled={loading || !file}
-                        className="mt-4 w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl disabled:shadow-none transform hover:scale-105 disabled:scale-100 flex items-center justify-center gap-3"
-                      >
-                        {loading ? (
-                          <>
-                            <Loader2 className="animate-spin" size={24} />
-                            <span className="text-lg">Processing...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles size={24} />
-                            <span className="text-lg">Summarize Word Document</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  )}
-
-                  {error && (
-                    <div className="mt-6 bg-red-50/95 backdrop-blur-sm border-2 border-red-300 text-red-700 px-6 py-4 rounded-xl shadow-lg">
-                      <div className="flex items-start gap-3">
-                        <AlertCircle className="flex-shrink-0 mt-1" size={24} />
-                        <div>
-                          <p className="font-semibold mb-1">Error</p>
-                          <p className="text-sm">{error}</p>
-                          {kannadaPercentage !== null && (
-                            <p className="text-xs mt-2 text-red-600">
-                              Detected Kannada content: {kannadaPercentage}%
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {summary && (
-                    <div className="mt-6 bg-gradient-to-br from-green-50/95 to-emerald-50/95 backdrop-blur-xl border-2 border-green-300 rounded-xl shadow-xl overflow-hidden animate-fade-in">
-                      <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-6 py-4 flex justify-between items-center">
-                        <div>
-                          <h3 className="font-bold text-white text-lg flex items-center gap-2">
-                            <span className="text-2xl">✨</span>
-                            Summary Generated
-                          </h3>
-                          {kannadaPercentage && (
-                            <p className="text-white/90 text-sm mt-1">
-                              Kannada content: {kannadaPercentage}%
-                            </p>
-                          )}
-                        </div>
-                        <button
-                          onClick={downloadSummary}
-                          className="bg-white text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg flex items-center gap-2 font-semibold transition-all shadow-md hover:shadow-lg"
-                        >
-                          <Download size={18} />
-                          Download
-                        </button>
-                      </div>
-                      <div className="p-6">
-                        <p className="text-gray-800 whitespace-pre-wrap leading-relaxed text-lg" style={{ fontFamily: 'Noto Sans Kannada, sans-serif' }}>
-                          {summary}
-                        </p>
-                      </div>
+              {(activeTab === 'pdf' || activeTab === 'word') && (
+                <div className="file-upload-zone">
+                  <Upload className="upload-icon" size={64} />
+                  <input
+                    type="file"
+                    accept={activeTab === 'pdf' ? '.pdf' : '.doc,.docx'}
+                    onChange={handleFileChange}
+                    className="file-input"
+                    id="file-upload"
+                  />
+                  <label htmlFor="file-upload" className="file-label">
+                    Click to upload {activeTab === 'pdf' ? 'PDF' : 'Word'} file
+                  </label>
+                  <p className="file-help-text">Maximum file size: 10MB</p>
+                  {file && (
+                    <div className="file-info">
+                      <p className="file-name">📄 {file.name}</p>
+                      <p className="file-size">{(file.size / 1024).toFixed(2)} KB</p>
                     </div>
                   )}
                 </div>
-              </div>
-
-              <div className="mt-6 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl p-6 border-2 border-white/50">
-                <h3 className="font-bold text-gray-800 mb-4 text-xl flex items-center gap-2">
-                  <span className="text-2xl">📋</span>
-                  How to Use
-                </h3>
-                <div className="space-y-3">
-                  {[
-                    'Select your preferred NLP algorithm from the sidebar',
-                    'Choose input method: Text, PDF, or Word document',
-                    'Enter Kannada text (ಕನ್ನಡ) or upload document with Kannada content',
-                    'Ensure at least 70% of content is in Kannada script',
-                    'Click the summarize button to generate summary',
-                    'View and download your summary'
-                  ].map((step, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 bg-orange-50 rounded-lg border border-orange-100">
-                      <span className="flex-shrink-0 w-7 h-7 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
-                        {idx + 1}
-                      </span>
-                      <span className="text-gray-700 pt-0.5">{step}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              )}
             </div>
           </div>
+
+          {/* Generate Summary Button */}
+          <button
+            onClick={activeTab === 'text' ? handleTextSummarize : handleFileUpload}
+            disabled={loading || (activeTab === 'text' ? !text.trim() : !file)}
+            className="generate-button"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="spinner" size={32} />
+                Processing...
+              </>
+            ) : (
+              <>
+                <Sparkles size={32} />
+                Generate Summary
+              </>
+            )}
+          </button>
+
+          {/* Error Message */}
+          {error && (
+            <div className="alert-error">
+              <div className="alert-content">
+                <AlertCircle className="alert-icon" size={32} />
+                <div>
+                  <h3 className="alert-title">Error</h3>
+                  <p className="alert-message">{error}</p>
+                  {kannadaPercentage !== null && (
+                    <p className="alert-info">
+                      Detected Kannada content: {kannadaPercentage}%
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Summary Result */}
+          {summary && (
+            <div className="summary-box">
+              <div className="summary-header">
+                <div>
+                  <h3 className="summary-title">
+                    <span className="summary-emoji">✨</span>
+                    Summarized Text
+                  </h3>
+                  {kannadaPercentage && (
+                    <p className="summary-percentage">
+                      Kannada content: {kannadaPercentage}%
+                    </p>
+                  )}
+                </div>
+                <button onClick={downloadSummary} className="download-btn">
+                  <Download size={24} />
+                  Download
+                </button>
+              </div>
+              <div className="summary-content">
+                <p className="summary-text kannada-text">{summary}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
