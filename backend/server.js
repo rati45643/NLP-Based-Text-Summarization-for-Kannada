@@ -50,6 +50,7 @@ const upload = multer({
 function isKannadaText(text) {
   // Kannada Unicode range: U+0C80 to U+0CFF
   const kannadaRegex = /[\u0C80-\u0CFF]/g;
+  
   const kannadaMatches = text.match(kannadaRegex);
   
   // Remove whitespace, punctuation, and numbers for accurate counting
