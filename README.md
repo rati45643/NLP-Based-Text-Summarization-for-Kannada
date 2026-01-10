@@ -1,3 +1,10 @@
+node.js- version 16.0 or above
+npm : v8.x or above (comes with Node.js)
+React.js : v18+
+MongoDB Compass 1.48.2
+HTML5, CSS3, JavaScript (ES6+)
+after this install follow these steps:
+
 1.Locate to your NLP based text summarization file.
 2. Open the terminal there only and enter code . like this only it will open the visual studio
    without you open manual from visual studio. In that Terminal new terminal for next follow 
