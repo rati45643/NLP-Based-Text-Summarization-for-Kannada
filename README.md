@@ -3,33 +3,34 @@ npm : v8.x or above (comes with Node.js)
 React.js : v18+
 MongoDB Compass 1.48.2
 HTML5, CSS3, JavaScript (ES6+)
+
+go to the website of hugging face API platform and the create your account and go to settings in left side toolbar and in that left side toolbar there is an option called access tokens click on that and follow this step:
+a. create new token
+b. token type: write
+c. token name: anything you can give.
+d. click on create token
+e. you can see token URL that is your API key copy that and paste it in .env file in backend.
+
 after this install follow these steps:
 
-1.Locate to your NLP based text summarization file.
-2. Open the terminal there only and enter code . like this only it will open the visual studio
-   without you open manual from visual studio. In that Terminal new terminal for next follow 
-   the bellow steps:     
- Backend requirements and how to execute[1st run this]:
-  1. cd backend and then type this following instructions:
-  2. install express using npm install express.
-  3. npm audit fix enter like this in terminal.
-  4. npm install mongoose cors multer pdf-parse mammoth enter like this for all requirements.
-  5. npm install dot env.
-  6. go to the website of hugging face API platform and the create your account and go to settings in left side toolbar and in that left         
-     side toolbar there is an option called access tokens click on that and follow this step:
-            a. create new token
-            b. token type: write
-            c. token name: anything you can give.
-            d. click on create token
-            e. you can see token URL that is your API key copy that and paste it in .env file in backend.
+1.Locate to your NLP based text summarization file. 
+2. Open the terminal there only and enter code . like this only it will open the visual studio without you open manual from visual studio. In that Terminal new terminal for next follow the bellow steps:
 
-  7. run the backend server with the command: node server.js
+In Terminal 1:
+C:\Users\krish\OneDrive\Desktop\Kannada text summarizer> cd backend
 
- Frontend requirements and how to execute[2nd run this] in separate terminal:
-   
-  1. cd frontend
-  2. cd ratishkk
-  3. enter in the terminal npm install it will install requirements of the vite or frontend.
-  4. npm install lucide-react.
-  5. run the frontend server with the command: npm run dev
-   
+1. npm install express
+2. npm audit fix
+3. npm install mongoose cors multer pdf-parse mammoth
+4. npm install dot env
+   C:\Users\krish\OneDrive\Desktop\Kannada text summarizer\backend> node server.js
+
+In Terminal 2:
+C:\Users\krish\OneDrive\Desktop\Kannada text summarizer>cd frontend
+C:\Users\krish\OneDrive\Desktop\Kannada text summarizer\frontend> cd ratishkk
+
+1.  npm install
+2.  npm lucide-react
+    C:\Users\krish\OneDrive\Desktop\Kannada text summarizer\frontend\ratishkk> npm run dev
+
+ 
